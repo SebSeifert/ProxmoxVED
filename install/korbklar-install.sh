@@ -30,21 +30,53 @@ msg_ok "Set up Python Environment"
 msg_info "Configuring KorbKlar"
 mkdir -p /opt/korbklar_data
 cat <<EOF >/opt/korbklar.env
-# Runtime data lives outside /opt/korbklar so an update never touches it.
+# KorbKlar configuration. Same variables as .env.example in the upstream
+# repository, with the paths of this container. Empty values mean the
+# built-in default. Restart with: systemctl restart korbklar
+
+# Optional instance-wide defaults for the start page, e.g. 26123 and
+# REWE,Lidl,Kaufland,dm. Personal browser values take precedence.
+SUPERMARKT_DEFAULT_POSTAL_CODE=${var_postal_code:-}
+SUPERMARKT_DEFAULT_RETAILERS=${var_retailers:-}
+
+# Optional bearer token for the REST API and the Android app pairing.
+# Empty keeps them open; the browser interface has no login either way.
+SUPERMARKT_API_KEY=${var_api_key:-}
+
+# Runtime data. Lives outside /opt/korbklar so an update never touches it.
 SUPERMARKT_DATA_DIR=/opt/korbklar_data
 SUPERMARKT_CACHE_DB=/opt/korbklar_data/supermarkt-cache.sqlite3
 SUPERMARKT_SIGNING_SECRET_FILE=/opt/korbklar_data/.signing-secret
 SUPERMARKT_ACCESS_TOKENS_FILE=/opt/korbklar_data/access-tokens.json
+# Leave empty so a persistent key is generated on first start.
+SUPERMARKT_SIGNING_SECRET=
 SUPERMARKT_IMAGE_CACHE_DIR=/opt/korbklar_data/supermarkt-images
 SUPERMARKT_KAUFLAND_CACHE_DIR=/opt/korbklar_data/kaufland
 SUPERMARKT_REWE_CACHE_DIR=/opt/korbklar_data/rewe
-# Headless browser for the retailer pages that need JavaScript (ALDI Sued, Kaufland, REWE).
+
+# Offer snapshot cache.
+SUPERMARKT_CACHE_TTL_MINUTES=30
+SUPERMARKT_CACHE_MAX_SNAPSHOTS=100
+SUPERMARKT_RESULT_RETENTION_HOURS=168
+
+# Network and parallelism. Empty user agent means korb-klar/<version>.
+SUPERMARKT_TIMEOUT_SECONDS=25
+SUPERMARKT_MARKTGURU_PAGE_SIZE=500
+SUPERMARKT_MAX_WORKERS=8
+SUPERMARKT_USER_AGENT=
+
+# Headless browser for the retailer pages that need JavaScript
+# (ALDI Sued, Kaufland, REWE).
 SUPERMARKT_CHROMIUM=/usr/bin/chromium
-# Optional bearer token for the REST API and the Android app pairing. Empty keeps them open.
-SUPERMARKT_API_KEY=${var_api_key:-}
-# Optional instance-wide defaults for the start page, e.g. 26123 and REWE,Lidl,Kaufland.
-SUPERMARKT_DEFAULT_POSTAL_CODE=${var_postal_code:-}
-SUPERMARKT_DEFAULT_RETAILERS=${var_retailers:-}
+
+# Store mappings. The offer data itself stays fresh.
+SUPERMARKT_KAUFLAND_STORE_CACHE_TTL_SECONDS=86400
+SUPERMARKT_REWE_STORE_CACHE_TTL_SECONDS=86400
+
+# Image cache.
+SUPERMARKT_IMAGE_CACHE_TTL_SECONDS=604800
+SUPERMARKT_IMAGE_CACHE_MAX_BYTES=536870912
+SUPERMARKT_IMAGE_MAX_FILE_BYTES=4194304
 EOF
 chmod 600 /opt/korbklar.env
 msg_ok "Configured KorbKlar"
