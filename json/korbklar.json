@@ -1,0 +1,49 @@
+{
+  "name": "KorbKlar",
+  "slug": "korbklar",
+  "categories": [
+    23
+  ],
+  "date_created": "2026-09-02",
+  "type": "ct",
+  "updateable": true,
+  "privileged": false,
+  "interface_port": 8000,
+  "documentation": "https://github.com/lesecuritae/KorbKlar/blob/main/README.en.md",
+  "website": "https://github.com/lesecuritae/KorbKlar",
+  "repository": "https://github.com/lesecuritae/KorbKlar",
+  "logo": "https://raw.githubusercontent.com/lesecuritae/KorbKlar/main/docs/readme-header.svg",
+  "description": "KorbKlar is a self-hosted comparison of current regional supermarket offers in Germany. Enter a postal code and it discovers the matching retailers and stores, loads their weekly offers, normalises product names and package sizes, compares unit prices including optional loyalty prices, and presents everything in a web interface with a browser-local shopping list and a REST API.",
+  "install_methods": [
+    {
+      "type": "default",
+      "script": "ct/korbklar.sh",
+      "config_path": "/opt/korbklar.env",
+      "resources": {
+        "cpu": 2,
+        "ram": 2048,
+        "hdd": 6,
+        "os": "Debian",
+        "version": "13"
+      }
+    }
+  ],
+  "default_credentials": {
+    "username": null,
+    "password": null
+  },
+  "notes": [
+    {
+      "text": "The web interface has no login. Keep it on a private network or put an authenticating reverse proxy in front. SUPERMARKT_API_KEY in /opt/korbklar.env protects the REST API and the Android app pairing only.",
+      "type": "warning"
+    },
+    {
+      "text": "Offer cache, product images and the signing key for result links live in /opt/korbklar_data and survive updates.",
+      "type": "info"
+    },
+    {
+      "text": "ALDI Süd, Kaufland and REWE pages are rendered with the installed headless Chromium, so the first search for a postal code can take a minute.",
+      "type": "info"
+    }
+  ]
+}
