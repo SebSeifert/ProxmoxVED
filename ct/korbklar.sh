@@ -20,6 +20,13 @@ var_version="${var_version:-13}"
 #var_arm64="${var_arm64:-no}" # unset = ask the user; set yes/no only when verified
 var_unprivileged="${var_unprivileged:-1}"
 
+# Optional application settings, written to /opt/korbklar.env. All three may
+# stay empty; they can be changed there later. Exported so they reach the
+# install script inside the container.
+export var_postal_code="${var_postal_code:-}"
+export var_retailers="${var_retailers:-}"
+export var_api_key="${var_api_key:-}"
+
 header_info "$APP"
 variables
 color

@@ -32,6 +32,11 @@
     "username": null,
     "password": null
   },
+  "app_vars": [
+    { "name": "var_postal_code", "label": "Default Postal Code", "type": "text", "help": "Preselected on the start page; personal browser values take precedence." },
+    { "name": "var_retailers", "label": "Default Retailers", "type": "text", "help": "Comma-separated retailer names, e.g. REWE,Lidl,Kaufland,dm." },
+    { "name": "var_api_key", "label": "API Key", "type": "password", "secret": true, "help": "Bearer token for the REST API and the Android app pairing. Empty keeps them open." }
+  ],
   "notes": [
     {
       "text": "The web interface has no login. Keep it on a private network or put an authenticating reverse proxy in front. SUPERMARKT_API_KEY in /opt/korbklar.env protects the REST API and the Android app pairing only.",

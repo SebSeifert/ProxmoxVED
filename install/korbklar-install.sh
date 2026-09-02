@@ -41,10 +41,10 @@ SUPERMARKT_REWE_CACHE_DIR=/opt/korbklar_data/rewe
 # Headless browser for the retailer pages that need JavaScript (ALDI Sued, Kaufland, REWE).
 SUPERMARKT_CHROMIUM=/usr/bin/chromium
 # Optional bearer token for the REST API and the Android app pairing. Empty keeps them open.
-SUPERMARKT_API_KEY=
-# Optional instance-wide defaults for the start page.
-SUPERMARKT_DEFAULT_POSTAL_CODE=
-SUPERMARKT_DEFAULT_RETAILERS=
+SUPERMARKT_API_KEY=${var_api_key:-}
+# Optional instance-wide defaults for the start page, e.g. 26123 and REWE,Lidl,Kaufland.
+SUPERMARKT_DEFAULT_POSTAL_CODE=${var_postal_code:-}
+SUPERMARKT_DEFAULT_RETAILERS=${var_retailers:-}
 EOF
 chmod 600 /opt/korbklar.env
 msg_ok "Configured KorbKlar"
